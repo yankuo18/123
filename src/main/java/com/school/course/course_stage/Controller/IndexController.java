@@ -31,7 +31,7 @@ public class IndexController {
 
     @RequestMapping("/page/{route}.html")
     public String anyTest(@PathVariable("route") String route ){
-        
+
         return "page/"+route;
     }
 
