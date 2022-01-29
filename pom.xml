@@ -42,12 +42,12 @@
             <version>2.1.0</version>
         </dependency>
 
-        <!--MyBatis分页插件-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.10</version>
-        </dependency>
+        <!--&lt;!&ndash;MyBatis分页插件&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.github.pagehelper</groupId>-->
+            <!--<artifactId>pagehelper-spring-boot-starter</artifactId>-->
+            <!--<version>1.2.10</version>-->
+        <!--</dependency>-->
         <!--集成druid连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
