@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: School Course Stage
   datasource:
     url: jdbc:mysql://150.158.32.183:3306/course_stage
     username: test1
@@ -10,6 +12,10 @@ spring:
     view:
       prefix: classpath:/templates/
       suffix: .html
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: /static/**
 
 mybatis:
   mapper-locations:
