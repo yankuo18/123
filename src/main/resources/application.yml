@@ -6,6 +6,10 @@ spring:
     url: jdbc:mysql://150.158.32.183:3306/course_stage
     username: test1
     password: test1
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
 
 mybatis:
   mapper-locations:
