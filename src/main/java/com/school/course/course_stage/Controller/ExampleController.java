@@ -16,12 +16,12 @@ public class ExampleController {
 
     /**
      *  example 由上面 自动注入对象，  通过访问 /example/example 获取输出
-     * @return
      */
     @RequestMapping("/example")
     @ResponseBody
     public String example(){
 
+        int b = 1;
         return example.example();
     }
 
