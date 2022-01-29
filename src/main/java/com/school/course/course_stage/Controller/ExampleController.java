@@ -21,7 +21,6 @@ public class ExampleController {
     @ResponseBody
     public String example(){
 
-        int b = 1;
         return example.example();
     }
 
