@@ -1,13 +1,12 @@
 package com.school.course.course_stage.Service.Impl;
 
-import com.school.course.course_stage.MybaitsGenerator.Entity.MenuVo;
-import com.school.course.course_stage.MybaitsGenerator.Entity.SysMenu;
+import com.school.course.course_stage.View.MenuVo;
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenu;
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenuExample;
 import com.school.course.course_stage.MybaitsGenerator.Mapper.SystemMenuMapper;
-import com.school.course.course_stage.Repository.SysMenuRepository;
 import com.school.course.course_stage.Service.SysMenuService;
 import com.school.course.course_stage.Util.TreeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,10 +19,8 @@ import java.util.Map;
 @Service
 public class SysMenuServiceImpl implements SysMenuService {
 
-//
-//    @Resource
-//    private SysMenuRepository sysMenuRepository;
 
+    @Resource
     private SystemMenuMapper systemMenuMapper;
 
     @Override
@@ -51,7 +48,8 @@ public class SysMenuServiceImpl implements SysMenuService {
         home.put("href","/page/welcome-1");//控制器路由,自行定义
         logo.put("title","后台管理系统");
         logo.put("image","/static/images/back.jpg");//静态资源文件路径,可使用默认的logo.png
-        map.put("homeInfo", "{title: '首页',href: '/ruge-web-admin/page/welcome.html'}}");
+//        map.put("homeInfo", "{title: '首页',href: '/page/welcome.html'}}");
+        map.put("homeInfo", "{title: '首页',href: '/index.html'}}");
         map.put("logoInfo", "{title: 'RUGE ADMIN',image: 'images/logo.png'}");
         return map;
     }

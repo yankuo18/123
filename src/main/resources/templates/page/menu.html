@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 <head>
     <meta charset="UTF-8">
     <title>menu</title>
@@ -37,7 +37,7 @@
 
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
-<script>
+<script th:inline="none">
     layui.use(['table', 'treetable'], function () {
         var $ = layui.jquery;
         var table = layui.table;

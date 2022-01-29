@@ -15,11 +15,11 @@ public class MyMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        //前端主页控制实现，可以加载样式
-        registry.addViewController("/").setViewName("index");
-        registry.addViewController("/index.html").setViewName("index");
-    }
+//
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        //前端主页控制实现，可以加载样式
+//        registry.addViewController("/").setViewName("index");
+//        registry.addViewController("/index.html").setViewName("index");
+//    }
 }

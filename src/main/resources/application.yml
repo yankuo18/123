@@ -8,14 +8,34 @@ spring:
     url: jdbc:mysql://150.158.32.183:3306/course_stage
     username: test1
     password: test1
+  #thymeleaf模板配置
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    #严格执行H5标准
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+
+
+    #静态资源路径
   mvc:
-    view:
-      prefix: classpath:/templates/
-      suffix: .html
     static-path-pattern: /static/**
+
   web:
     resources:
-      static-locations: /static/**
+      static-locations: classpath:/templates/
+#  mvc:
+#    static-path-pattern: classpath:/templates/
+
+#  mvc:
+#    view:
+#      prefix: classpath:/templates/
+#      suffix: .html
+
 
 mybatis:
   mapper-locations:

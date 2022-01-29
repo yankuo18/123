@@ -3,18 +3,18 @@ package com.school.course.course_stage.MybaitsGenerator.Mapper;
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenu;
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenuExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 
+@Mapper
 public interface SystemMenuMapper {
 
 
 
 
     List<SystemMenu> getSystemMenuByStatusAndSort(Long status,Integer sort);
-
-
-//    List<SysMenu> findAllByStatusOrderBySort(Boolean status);
 
 
     /**

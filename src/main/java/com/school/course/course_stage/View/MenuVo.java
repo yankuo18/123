@@ -1,4 +1,4 @@
-package com.school.course.course_stage.MybaitsGenerator.Entity;
+package com.school.course.course_stage.View;
 
 import java.util.List;
 

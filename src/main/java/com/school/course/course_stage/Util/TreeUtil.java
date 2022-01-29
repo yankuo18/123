@@ -1,6 +1,6 @@
 package com.school.course.course_stage.Util;
 
-import com.school.course.course_stage.MybaitsGenerator.Entity.MenuVo;
+import com.school.course.course_stage.View.MenuVo;
 
 import java.util.ArrayList;
 import java.util.List;
