@@ -135,12 +135,27 @@
                 layer.msg('密码不能为空');
                 return false;
             }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', function () {
-                window.location = 'index.html';
+
+            // 暂时关闭验证码
+            // if (data.captcha == '') {
+            //     layer.msg('验证码不能为空');
+            //     return false;
+            // }
+
+            $.post("/login/pc",data,function (result) {
+                console.log(result);
+
+                if (result.length > 2 ){
+
+                    layer.msg('登录成功', function () {
+                        sessionStorage.setItem("token",result);
+                        window.location = 'index.html';
+                    });
+
+                }else {
+                    layer.msg('登录失败');
+                    return false;
+                }
             });
             return false;
         });
