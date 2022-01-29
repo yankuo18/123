@@ -1,6 +1,6 @@
 package com.school.course.course_stage.Service.Impl;
 
-import com.school.course.course_stage.View.MenuVo;
+import com.school.course.course_stage.VO.MenuVo;
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenu;
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenuExample;
 import com.school.course.course_stage.MybaitsGenerator.Mapper.SystemMenuMapper;

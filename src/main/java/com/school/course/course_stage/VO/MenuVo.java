@@ -1,4 +1,4 @@
-package com.school.course.course_stage.View;
+package com.school.course.course_stage.VO;
 
 import java.util.List;
 
