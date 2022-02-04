@@ -155,7 +155,7 @@
                 if (result.code == 0 ){
 
                     layer.msg('登录成功', function () {
-                        sessionStorage.setItem("token",result.data);
+                        sessionStorage.setItem("token",result.data.token);
                         sessionStorage.setItem("role",data.role);
                         window.location = 'index.html';
                     });

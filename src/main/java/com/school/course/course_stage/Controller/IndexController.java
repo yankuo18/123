@@ -33,5 +33,10 @@ public class IndexController {
         return "page/"+route;
     }
 
+    @RequestMapping("/page/table/{route}.html")
+    public String anyTestTable(@PathVariable("route") String route ){
+
+        return "page/table/"+route;
+    }
 
 }

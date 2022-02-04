@@ -15,7 +15,9 @@ public final class ConstAttr {
     public static final int NOTICE = 1 ;
 
 
-
+    public static final int MENU_STOP = 0;
+    public static final int MENU_NORMAL = 1 ;
+    public static final int MENU_FUNCTION = 2 ;
 
 
 

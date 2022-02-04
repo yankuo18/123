@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/login")
@@ -28,11 +30,11 @@ public class LoginController {
 
     @RequestMapping(value = "pc",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnResult loginPC(@RequestParam("username") String account ,@RequestParam("password") String password ,@RequestParam("role") String role){
+    public Map<String,Object> loginPC(@RequestParam("username") String account ,@RequestParam("password") String password ,@RequestParam("role") String role){
 
         //TODO 等待删除,测试方便
         if (account.equals("test"))
-            return new ReturnResult(0,"登录成功","test");
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"登录成功","token","test");
 
         String token = null ;
 
@@ -57,9 +59,9 @@ public class LoginController {
         }
 
         if ( token != null && !token.equals("") )
-            return new ReturnResult(ConstAttr.SUCCESS,"login success",(Object)token);
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"login success","token",token);
         else
-            return new ReturnResult(ConstAttr.ERROR,"login error");
+            return new ReturnResult().toMap(ConstAttr.ERROR,"login error");
 
     }
 

@@ -55,4 +55,12 @@ public class Q_UserAdminServiceImpl implements Q_UserAdminService {
 
         return null;
     }
+
+    @Override
+    public boolean haveToken(String token) {
+        UserAdminExample userAdminExample = new UserAdminExample();
+        userAdminExample.or().andTokenEqualTo(token);
+        List<UserAdmin> userAdmins = userAdminMapper.selectByExample(userAdminExample);
+        return userAdmins.size() > 0 ;
+    }
 }

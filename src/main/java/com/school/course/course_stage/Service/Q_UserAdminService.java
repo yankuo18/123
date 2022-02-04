@@ -10,5 +10,7 @@ public interface Q_UserAdminService {
 
     String login(String account, String password);
 
+    boolean haveToken(String token);
+
 
 }

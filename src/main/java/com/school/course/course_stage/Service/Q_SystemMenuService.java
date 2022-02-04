@@ -13,5 +13,8 @@ public interface Q_SystemMenuService {
 
     Map<String,Object> menuIndex(String role);
 
+    List<SystemMenu> getMenuByRoleAndStatus(String role , int status);
+
+
 
 }

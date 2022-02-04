@@ -6,6 +6,7 @@ import com.school.course.course_stage.MybaitsGenerator.Entity.SystemMenuExample;
 import com.school.course.course_stage.MybaitsGenerator.Mapper.SystemMenuMapper;
 import com.school.course.course_stage.Service.Q_RoleMenuService;
 import com.school.course.course_stage.Service.Q_SystemMenuService;
+import com.school.course.course_stage.Util.ConstAttr;
 import com.school.course.course_stage.Util.TreeUtil;
 import com.school.course.course_stage.VO.MenuVo;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class Q_SystemMenuServiceImpl implements Q_SystemMenuService {
 
     @Override
     public Map<String, Object> menuIndex(String role) {
-        List<SystemMenu> systemMenus = this.getMenuByRole(role);
+        List<SystemMenu> systemMenus = this.getMenuByRoleAndStatus(role,ConstAttr.MENU_NORMAL);
 
         Map<String, Object> map = new HashMap<>(16);
         Map<String,Object> home = new HashMap<>(16);
@@ -73,5 +74,17 @@ public class Q_SystemMenuServiceImpl implements Q_SystemMenuService {
         map.put("logoInfo", logo);
         map.put("menuInfo", TreeUtil.toTree(menuInfo, 0L));
         return map;
+    }
+
+    @Override
+    public List<SystemMenu> getMenuByRoleAndStatus(String role, int status) {
+        List<SystemMenu> systemMenus = this.getMenuByRole(role);
+        List<SystemMenu> newMenus = new ArrayList<>();
+        for (SystemMenu systemMenu : systemMenus) {
+            if (systemMenu.getStatus() == status){
+                newMenus.add(systemMenu);
+            }
+        }
+        return newMenus;
     }
 }
