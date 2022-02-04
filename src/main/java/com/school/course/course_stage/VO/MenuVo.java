@@ -16,6 +16,8 @@ public class MenuVo {
 
     private String target;
 
+    private List<MenuVo> child;
+
     public Long getId() {
         return id;
     }
@@ -72,5 +74,4 @@ public class MenuVo {
         this.child = child;
     }
 
-    private List<MenuVo> child;
 }
