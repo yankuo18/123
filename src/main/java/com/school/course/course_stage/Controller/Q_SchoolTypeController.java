@@ -35,6 +35,18 @@ public class Q_SchoolTypeController {
     }
 
 
+    @RequestMapping("/add")
+    public Map<String,Object> addSchoolType(@RequestParam("token")String token , @RequestParam("role")String role, @RequestParam("name")String name, @RequestParam("remark")String remark){
+
+        if (!q_authorityService.authority(role,token,"/q_schoolType/add"))
+            return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
+
+        if (q_schoolTypeService.insert(name,remark) > 0 )
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"添加成功");
+        else
+            return new ReturnResult().toMap(ConstAttr.ERROR,"添加失败");
+    }
+
 
 
 

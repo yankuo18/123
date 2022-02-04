@@ -131,8 +131,17 @@
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
-                    area: ['50%', '100%'],
-                    content: '../page/table/add.html',
+                    area: ['50%','50%'],
+                    content: '../page/table/q-add-school-type.html',
+                    end:function () {
+                        var requestData = {};
+                        requestData.role = sessionStorage.getItem("role");
+                        requestData.token =sessionStorage.getItem("token");
+                        table.reload('currentTableId', {
+                            url: '/q_schoolType/all',
+                            where: requestData
+                        });
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

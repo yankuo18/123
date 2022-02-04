@@ -7,6 +7,7 @@ import com.school.course.course_stage.Service.Q_SchoolTypeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +36,16 @@ public class Q_SchoolTypeServiceImpl implements Q_SchoolTypeService {
 
     @Override
     public int insert(TypeSchool typeSchool) {
-        return 0;
+        return typeSchoolMapper.insert(typeSchool);
+    }
+
+    @Override
+    public int insert(String name, String remark) {
+        TypeSchool typeSchool = new TypeSchool();
+        typeSchool.setName(name);
+        typeSchool.setRemark(remark);
+        typeSchool.setCreateAt(new Date());
+
+        return this.insert(typeSchool);
     }
 }

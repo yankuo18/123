@@ -38,23 +38,40 @@
 </div>
 <script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['form'], function () {
+    layui.use(['form','layer'], function () {
         var form = layui.form,
             layer = layui.layer,
             $ = layui.$;
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            var index = layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
+            data = data.field;
+            data.role = sessionStorage.getItem("role");
+            data.token = sessionStorage.getItem("token");
+
+            var index = layer.alert("确认提交？", {
+                title: '提示'
             }, function () {
-
-
-                // 关闭弹出层
                 layer.close(index);
+                var iframeIndex = parent.layer ;
+                var add =  $.ajax({
+                    url:"/q_schoolType/add",
+                    data:data,
+                    success:function (result) {
+                        if (0 === result.code){
+                            layer.msg(result.msg,{time:1000,end:function () {
+                                    var iframeIndexT = iframeIndex.getFrameIndex(window.name);
+                                    iframeIndex.close(iframeIndexT);
+                                }});
+                        }else {
+                            layer.alert(result.msg,{end:function () {
+                                    var iframeIndexT = iframeIndex.getFrameIndex(window.name);
+                                    iframeIndex.close(iframeIndexT);
+                                }});
+                        }
 
-                var iframeIndex = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(iframeIndex);
+                    }
+                });
 
             });
 

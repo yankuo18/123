@@ -14,5 +14,7 @@ public interface Q_SchoolTypeService {
 
     int insert(TypeSchool typeSchool);
 
+    int insert(String name , String remark) ;
+
 
 }
