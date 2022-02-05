@@ -52,12 +52,12 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" > 添加 </button>
+                <!--<button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>-->
             </div>
         </script>
 
-        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter" lay-event="edit"></table>
 
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
@@ -72,6 +72,8 @@
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table;
+
+        var mainIndex ;
 
         var requestData = {};
         requestData.role = sessionStorage.getItem("role");
@@ -153,10 +155,10 @@
             }
         });
 
-        //监听表格复选框选择
-        table.on('checkbox(currentTableFilter)', function (obj) {
-            console.log(obj)
-        });
+        // //监听表格复选框选择
+        // table.on('checkbox(currentTableFilter)', function (obj) {
+        //     console.log(obj)
+        // });
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
@@ -164,27 +166,123 @@
 
                 var index = layer.open({
                     title: '编辑分类',
-                    type: 2,
+                    type: 1,
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
-                    area: ['50%', '100%'],
-                    content: '../page/table/edit.html',
+                    area: ['50%', '50%'],
+                    content:$("#AddOrUpdateForm"),
+                    success:function (layero,index) {
+                        form.val("dataForm",data);
+                        mainIndex = index;
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
+
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除么？', function (index) {
-                    obj.del();
+                layer.confirm('删除？', function (index) {
+
+                    var requestData = {};
+                    requestData.role = sessionStorage.getItem("role");
+                    requestData.token = sessionStorage.getItem("token");
+                    requestData.id = data.id ;
                     layer.close(index);
+                    $.ajax({
+                        url:"/q_schoolType/delete",
+                        data:requestData,
+                        success:function (result) {
+                            if ( 0 === result.code){
+                                layer.msg(result.msg,{time:1000});
+                                obj.del();
+                            }else {
+                                layer.alert(result.msg);
+                            }
+                        }
+                    });
                 });
             }
         });
 
+
+        //Form监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var requestData = data.field;
+            requestData.role = sessionStorage.getItem("role");
+            requestData.token = sessionStorage.getItem("token");
+
+            console.log(requestData);
+            $.ajax({
+                url:"/q_schoolType/update",
+                data:requestData,
+                success:function (result) {
+                    console.log(result);
+                    if (0 === result.code){
+                        layer.msg(result.msg,{time:1000,end:function () {
+                                table.reload('currentTableId', {
+                                    url: '/q_schoolType/all',
+                                    where: requestData
+                                });
+                            }});
+                    }else {
+                        layer.alert(result.msg);
+                    }
+
+                    layer.close(mainIndex);
+
+                }
+            });
+
+
+
+            //
+            // var index = layer.alert(JSON.stringify(data.field), {
+            //     title: '最终的提交信息'
+            // }, function () {
+            //
+            //     // 关闭弹出层
+            //     layer.close(index);
+            //
+            //     var t = form.val("saveBtn");
+            //     console.log(t);
+            //     var iframeIndex = parent.layer.getFrameIndex(window.name);
+            //     parent.layer.close(iframeIndex);
+            //
+            // });
+
+            return false;
+        });
+
     });
 </script>
+
+<div id="AddOrUpdateForm" style="display: none;">
+    <div class="layui-form layuimini-form" lay-filter="dataForm">
+        <input type="number" name="id" style="display: none;">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">分类名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入分类名" value="" class="layui-input">
+                <tip>填写学校分类的名称。</tip>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注信息</label>
+            <div class="layui-input-block">
+                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

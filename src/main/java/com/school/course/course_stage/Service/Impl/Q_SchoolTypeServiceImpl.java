@@ -26,12 +26,12 @@ public class Q_SchoolTypeServiceImpl implements Q_SchoolTypeService {
 
     @Override
     public int deleteById(int id) {
-        return 0;
+        return typeSchoolMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public int update(TypeSchool typeSchool) {
-        return 0;
+        return typeSchoolMapper.updateByPrimaryKey(typeSchool);
     }
 
     @Override
