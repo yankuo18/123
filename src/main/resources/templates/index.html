@@ -134,8 +134,17 @@
             miniAdmin = layui.miniAdmin,
             miniTongji = layui.miniTongji;
 
+        var role = sessionStorage.getItem("role");
+
+        var initUrl = "/q_menu/menu_index/"+role ;
+        
+        var token = sessionStorage.getItem("token");
+        
+        if (token == "test")
+            initUrl = "api/init.json" ;
+
         var options = {
-            iniUrl: "api/init.json",    // 初始化接口
+            iniUrl: initUrl,    // 初始化接口
             clearUrl: "api/clear.json", // 缓存清理接口
             urlHashLocation: true,      // 是否打开hash定位
             bgColorDefault: false,      // 主题默认配置

@@ -1,7 +1,10 @@
 package com.school.course.course_stage.Controller;
 
 import com.school.course.course_stage.MybaitsGenerator.Entity.SystemUser;
-import com.school.course.course_stage.Service.SysUserService;
+import com.school.course.course_stage.Service.Q_UserAdminService;
+import com.school.course.course_stage.Service.Q_UserSchoolService;
+import com.school.course.course_stage.Util.ConstAttr;
+import com.school.course.course_stage.Util.ReturnResult;
 import com.school.course.course_stage.Util.Tools;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/login")
@@ -17,30 +22,47 @@ public class LoginController {
 
 
     @Resource
-    private SysUserService sysUserService ;
+    private Q_UserAdminService q_userAdminService ;
+
+    @Resource
+    private Q_UserSchoolService q_userSchoolService;
+
 
     @RequestMapping(value = "pc",method = RequestMethod.POST)
     @ResponseBody
-    public String loginPC(@RequestParam("username") String account ,@RequestParam("password") String password){
+    public Map<String,Object> loginPC(@RequestParam("username") String account ,@RequestParam("password") String password ,@RequestParam("role") String role){
 
-        boolean isLogin = sysUserService.isLogin(account,password) ;
+        //TODO 等待删除,测试方便
+        if (account.equals("test"))
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"登录成功","token","test");
 
-        String token = "";
-        if (isLogin){
-            token = Tools.getToken(account);
+        String token = null ;
 
-            //还要将token写入数据库
-            SystemUser systemUser = new SystemUser() ;
-            systemUser.setToken(token);
-            systemUser.setAccount(account);
+        switch (role){
+            case ConstAttr.ADMIN:
+                token = q_userAdminService.login(account,password);
+                break;
+            case ConstAttr.SCHOOL:
+                token = q_userSchoolService.login(account,password);
+                break;
+            case ConstAttr.TEACHER_MANAGE:
 
-            int count = sysUserService.updateUserInfo(systemUser);
-            if (count == 0 ){
-                token = "";
-            }
+
+                break;
+            case ConstAttr.TEACHER_TEACHE:
+
+
+                break;
+            default:
+
+                break;
         }
 
-        return token;
+        if ( token != null && !token.equals("") )
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"login success","token",token);
+        else
+            return new ReturnResult().toMap(ConstAttr.ERROR,"login error");
+
     }
 
 
