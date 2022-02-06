@@ -20,6 +20,7 @@ public final class ConstAttr {
     public static final int MENU_FUNCTION = 2 ;
 
 
+    public static final byte USER_STATUS_NORMAL = 1 ;
 
 
 }

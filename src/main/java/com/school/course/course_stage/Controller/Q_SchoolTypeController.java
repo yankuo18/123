@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,9 +32,11 @@ public class Q_SchoolTypeController {
         if (!q_authorityService.authority(role,token,"/q_schoolType/all"))
             return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
 
+        List<TypeSchool> typeSchools = q_schoolTypeService.getAll();
 
-        return new ReturnResult().toMap(ConstAttr.SUCCESS,"",q_schoolTypeService.getAll());
+        return new ReturnResult().toMap(ConstAttr.SUCCESS,"",typeSchools,typeSchools.size());
     }
+
 
 
     @RequestMapping("/add")

@@ -30,7 +30,18 @@ public class Q_UserSchoolServiceImpl implements Q_UserSchoolService {
     @Override
     public int update(UserSchool userSchool) {
         userSchool.setUpdateAt(new Date());
-        return userSchoolMapper.updateByPrimaryKey(userSchool);
+        return userSchoolMapper.updateByPrimaryKeySelective(userSchool);
+    }
+
+    @Override
+    public int deleteById(int id) {
+        return userSchoolMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int insert(UserSchool userSchool) {
+        userSchool.setCreateAt(new Date());
+        return userSchoolMapper.insert(userSchool);
     }
 
     @Override
@@ -52,5 +63,15 @@ public class Q_UserSchoolServiceImpl implements Q_UserSchoolService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<UserSchool> getAll() {
+        return userSchoolMapper.selectByExample(new UserSchoolExample());
+    }
+
+    @Override
+    public List<UserSchool> select(UserSchoolExample userSchoolExample) {
+        return userSchoolMapper.selectByExample(userSchoolExample);
     }
 }
