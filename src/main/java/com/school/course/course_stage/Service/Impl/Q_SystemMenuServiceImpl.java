@@ -39,7 +39,8 @@ public class Q_SystemMenuServiceImpl implements Q_SystemMenuService {
 
         for (RoleMenu roleMenu : roleMenus) {
             SystemMenu systemMenu = this.systemMenuMapper.selectByPrimaryKey(roleMenu.getMenuId());
-            systemMenus.add(systemMenu);
+            if (systemMenu != null)
+                systemMenus.add(systemMenu);
         }
 
         return systemMenus;

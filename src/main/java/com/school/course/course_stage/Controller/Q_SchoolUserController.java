@@ -67,7 +67,7 @@ public class Q_SchoolUserController {
     @RequestMapping("/add")
     public Map<String,Object> addSchoolUser(UserSchool userSchool){
 
-        if (!q_authorityService.authority(userSchool.getRole(),userSchool.getToken(),"/q_schoolType/add"))
+        if (!q_authorityService.authority(userSchool.getRole(),userSchool.getToken(),"/q_schoolUser/add"))
             return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
 
         userSchool.setStatus(ConstAttr.USER_STATUS_NORMAL);
@@ -84,7 +84,7 @@ public class Q_SchoolUserController {
     @RequestMapping("/update")
     public Map<String,Object> updateSchoolUser(UserSchool userSchool){
 
-        if (!q_authorityService.authority(userSchool.getRole(),userSchool.getToken(),"/q_schoolType/update"))
+        if (!q_authorityService.authority(userSchool.getRole(),userSchool.getToken(),"/q_schoolUser/update"))
             return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
 
         userSchool.setToken(null);
@@ -101,7 +101,7 @@ public class Q_SchoolUserController {
     @RequestMapping("/delete")
     public Map<String,Object> deleteSchoolUser(@RequestParam("token")String token , @RequestParam("role")String role, @RequestParam("id")int id){
 
-        if (!q_authorityService.authority(role,token,"/q_schoolType/delete"))
+        if (!q_authorityService.authority(role,token,"/q_schoolUser/delete"))
             return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
 
         if (q_userSchoolService.deleteById(id) > 0 )
@@ -113,7 +113,7 @@ public class Q_SchoolUserController {
     @RequestMapping("/deleteSome")
     public Map<String,Object> deleteSomeSchoolUser(Q_SchoolUserDeleteSomeDTO q_schoolUserDeleteSomeDTO){
 
-        if (!q_authorityService.authority(q_schoolUserDeleteSomeDTO.getRole(),q_schoolUserDeleteSomeDTO.getToken(),"/q_schoolType/delete"))
+        if (!q_authorityService.authority(q_schoolUserDeleteSomeDTO.getRole(),q_schoolUserDeleteSomeDTO.getToken(),"/q_schoolUser/delete"))
             return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
 
         int length = q_schoolUserDeleteSomeDTO.getIds().size();

@@ -19,23 +19,18 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">学校名称</label>
+                            <label class="layui-form-label">名称</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="name" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">学校代码</label>
+                            <label class="layui-form-label">代码</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="code" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">分类</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="typeSchool" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
+
                         <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                         </div>
@@ -73,8 +68,8 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/q_schoolUser/all',
-            where: requestData ,
+            url: '/q_courseType/all',
+            where:requestData,
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -84,13 +79,8 @@
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 80, title: 'ID', sort: true},
-                {field: 'name',  title: '学校名称'},
-                {field: 'code', width: 150, title: '代码', sort: true},
-                {field: 'account',  title: '账号'},
-                {field: 'password', title: '密码' },
-                {field: 'phone',  title: '联系方式' },
-                // {field: 'status', width: 80, title: '状态', sort: true},
-                {field: 'typeSchool', width: 150, title: '分类' , sort:true},
+                {field: 'name', title: '名称',sort:true},
+                {field: 'code', title: '代码', sort: true},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
@@ -119,8 +109,9 @@
             //         searchParams: data
             //     }
             // }, 'data');
+            console.log(requestData);
             table.reload('currentTableId', {
-                url: '/q_schoolUser/select',
+                url: '/q_courseType/select',
                 where: requestData
             });
 
@@ -163,7 +154,7 @@
             }
 
         });
-        
+
         var url , mainIndex ;
 
         /**
@@ -171,7 +162,7 @@
          */
         function addFunction() {
             layer.open({
-                title: '添加学校',
+                title: '添加课程分类',
                 type: 1,
                 shade: 0.2,
                 maxmin:true,
@@ -182,32 +173,8 @@
 
                     $("#AddOrUpdateForm")[0].reset();
                     form.render();
-                    var requestData = {};
-                    requestData.role = sessionStorage.getItem("role");
-                    requestData.token = sessionStorage.getItem("token");
 
-                    $.ajax({
-                        url:'/q_schoolType/all',
-                        data:requestData,
-                        success:function (result) {
-                            if ( 0 === result.code){
-                                var data = result.data ;
-                                var selectHtml = $("#AddOrUpdateForm").find("select[name='typeSchool']");
-                                selectHtml.empty().append('<option value=""></option>');
-                                for (var i = 0 ; i < data.length ; i ++ ){
-                                    selectHtml.append(
-                                        '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-                                    );
-                                }
-                                form.render();
-                            }else {
-                                layer.alert(result.msg);
-                            }
-
-                        }
-                    });
-
-                    url = "/q_schoolUser/add";
+                    url = "/q_courseType/add";
                     mainIndex = index ;
 
                 }
@@ -227,7 +194,7 @@
             }
             console.log(requestData);
             $.ajax({
-                url:'/q_schoolUser/deleteSome',
+                url:'/q_courseType/deleteSome',
                 data:requestData,
                 success:function (result) {
                     if (0 === result.code){
@@ -236,7 +203,7 @@
                         layer.alert(result.msg);
                     }
                     table.reload('currentTableId', {
-                        url: '/q_schoolUser/all',
+                        url: '/q_courseType/all',
                         where: requestData
                     });
                 }
@@ -245,9 +212,8 @@
         }
 
         function updateFunction(obj) {
-            console.log(obj.data);
             layer.open({
-                title: '编辑学校信息',
+                title: '编辑课程分类信息',
                 type: 1,
                 shade: 0.2,
                 maxmin:true,
@@ -257,35 +223,7 @@
                 success:function (layero,index) {
                     form.val("dataForm",obj.data);
 
-                    var requestData = {};
-                    requestData.role = sessionStorage.getItem("role");
-                    requestData.token = sessionStorage.getItem("token");
-
-                    $.ajax({
-                        url:'/q_schoolType/all',
-                        data:requestData,
-                        success:function (result) {
-                            if ( 0 === result.code){
-                                var data = result.data ;
-                                var selectHtml = $("#AddOrUpdateForm").find("select[name='typeSchool']");
-                                selectHtml.empty().append('<option value=""></option>');
-                                for (var i = 0 ; i < data.length ; i ++ ){
-                                    selectHtml.append(
-                                        '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-                                    );
-                                }
-                                form.render();
-                                form.val("dataForm",{"typeSchool":obj.data.typeSchool});
-                                form.render();
-                            }else {
-                                layer.alert(result.msg);
-                            }
-
-                        }
-                    });
-
-
-                    url = "/q_schoolUser/update";
+                    url = "/q_courseType/update";
                     mainIndex = index;
                 }
             });
@@ -301,7 +239,7 @@
                 requestData.id = obj.data.id ;
 
                 $.ajax({
-                    url:'/q_schoolUser/delete',
+                    url:'/q_courseType/delete',
                     data:requestData,
                     success:function (result) {
                         if ( 0 === result.code){
@@ -323,7 +261,6 @@
             requestData.role = sessionStorage.getItem("role");
             requestData.token = sessionStorage.getItem("token");
 
-
             $.ajax({
                 url:url,
                 data:requestData,
@@ -332,7 +269,7 @@
                     if (0 === result.code){
                         layer.msg(result.msg,{time:1000,end:function () {
                                 table.reload('currentTableId', {
-                                    url: '/q_schoolUser/all',
+                                    url: '/q_courseType/all',
                                     where: requestData
                                 });
                             }});
@@ -349,65 +286,23 @@
         });
 
 
-
-
-
-
-
-
-
-
     });
 </script>
 
 <form action="" class="layui-form layuimini-form" lay-filter="dataForm" id="AddOrUpdateForm" style="display: none;margin-right: 40px;margin-top: 30px;">
-    <input type="text" name="id" style="display: none;">
+    <input type="number" name="id" style="display: none;">
     <div class="layui-form-item">
-        <label class="layui-form-label required">学校名称</label>
+        <label class="layui-form-label required">名称</label>
         <div class="layui-input-block">
-            <input type="text" name="name" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入学校名称" value="" class="layui-input">
+            <input type="text" name="name" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入名称" value="" class="layui-input">
             <!--<tip>填写自己管理账号的名称。</tip>-->
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">学校代码</label>
+        <label class="layui-form-label required">代码</label>
         <div class="layui-input-block">
-            <input type="text" name="code" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入学校代码" value="" class="layui-input">
-            <tip>填写学校代码，或名称首字母。</tip>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">账号</label>
-        <div class="layui-input-block">
-            <input type="text" name="account" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入学校账号" value="" class="layui-input">
+            <input type="text" name="code" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入代码" value="" class="layui-input">
             <!--<tip>填写学校代码，或名称首字母。</tip>-->
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">密码</label>
-        <div class="layui-input-block">
-            <input type="text" name="password" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入学校密码" value="" class="layui-input">
-            <!--<tip>填写学校代码，或名称首字母。</tip>-->
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">联系方式</label>
-        <div class="layui-input-block">
-            <input type="number" name="phone" placeholder="请输入联系方式" value="" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">分类</label>
-        <div class="layui-input-block">
-            <select name="typeSchool" lay-verify="required">
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注信息</label>
-        <div class="layui-input-block">
-            <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
         </div>
     </div>
 
@@ -417,6 +312,7 @@
         </div>
     </div>
 </form>
+
 
 </body>
 </html>
