@@ -94,6 +94,18 @@ public class ReturnResult {
         return maps;
     }
 
+    public Map<String,Object> toMap(int code , String msg ,Object object,int count){
+
+        Map<String,Object> maps = new HashMap<>(16);
+        maps.put("code",code);
+        maps.put("msg",msg);
+
+        maps.put("count",count);
+
+        maps.put("data",object);
+        return maps;
+    }
+
     public Map<String,Object> toMap(int code , String msg ){
 
         Map<String,Object> maps = new HashMap<>(16);
