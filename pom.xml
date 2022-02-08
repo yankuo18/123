@@ -66,6 +66,12 @@
             <version>1.3.5</version>
         </dependency>
 
+        <!--fileupload 包-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
 
     </dependencies>
 

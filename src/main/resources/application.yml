@@ -27,7 +27,7 @@ spring:
 
   web:
     resources:
-      static-locations: classpath:/templates/
+      static-locations: classpath:/templates/,static/
 #  mvc:
 #    static-path-pattern: classpath:/templates/
 
