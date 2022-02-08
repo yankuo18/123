@@ -7,6 +7,7 @@ import com.school.course.course_stage.Service.S_ParentMessageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,8 @@ public class S_ParentMessageImpl implements S_ParentMessageService {
 
     @Override
     public int update(UserParents userParents) {
-        return 0;
+        userParents.setUpdateAt(new Date());
+        return userParentsMapper.updateByPrimaryKeySelective(userParents);
     }
 
     @Override

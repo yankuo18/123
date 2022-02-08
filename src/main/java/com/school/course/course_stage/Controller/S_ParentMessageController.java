@@ -43,10 +43,26 @@ public class S_ParentMessageController {
     }
 
     @RequestMapping("/add")
-    // TODO 后台教师信息添加功能是否需要
-    public Map<String, Object> addParent() {
+    public Map<String, Object> addParent(UserParents userParents) {
+        if (!q_authorityService.authority(userParents.getRole(), userParents.getToken(), "/s_parentMessage/add"))
+            return new ReturnResult().toMap(ConstAttr.ERROR, "无权限");
 
-        return null;
+        if (s_parentMessageService.insert(userParents) > 0)
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"添加成功");
+        else
+            return new ReturnResult().toMap(ConstAttr.ERROR,"添加失败");
+    }
+
+    @RequestMapping("/update")
+    public Map<String, Object> updateParent(UserParents userParents) {
+        if (!q_authorityService.authority(userParents.getRole(), userParents.getToken(), "/s_parentMessage/update"))
+            return new ReturnResult().toMap(ConstAttr.ERROR, "无权限");
+
+        userParents.setToken(null);
+        if (s_parentMessageService.update(userParents) > 0)
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"修改成功");
+        else
+            return new ReturnResult().toMap(ConstAttr.ERROR,"修改失败");
     }
 
     @RequestMapping("/select")

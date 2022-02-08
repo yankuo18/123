@@ -101,7 +101,6 @@
             requestData.token = sessionStorage.getItem("token");
 
             //执行搜索重载
-            console.log(requestData);
             table.reload('currentTableId', {
                 url: '/s_parentMessage/select',
                 where: requestData
@@ -114,23 +113,13 @@
          * toolbar监听事件
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {  // 监听添加操作
-                var index = layer.open({
-                    title: '添加用户',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin:true,
-                    shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: '../page/table/add.html',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
-            } else if (obj.event === 'delete') {  // 监听删除操作
-                var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+            switch (obj.event) {
+                case 'add':
+                    addFunction();
+                    break;
+                case 'delete':
+                    deleteSomeFunction();
+                    break;
             }
         });
 
@@ -140,32 +129,135 @@
         });
 
         table.on('tool(currentTableFilter)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'edit') {
+            switch (obj.event) {
+                case 'edit':
+                    updateFunction(obj);
+                    return false ;
+                case 'delete':
+                    deleteOneFunction(obj);
+                    break;
 
-                var index = layer.open({
-                    title: '编辑用户',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin:true,
-                    shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: '../page/table/edit.html',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
-                return false;
-            } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
             }
+        });
+
+        var url, mainIndex;
+
+        /**
+         * 添加功能
+         */
+        function addFunction() {
+            layer.open({
+                title: '添加家长信息',
+                type: 1,
+                shade: 0.2,
+                maxmin:true,
+                shadeClose: true,
+                area: ['50%', '100%'],
+                content: $("#AddOrUpdateForm"),
+                success:function (layero,index) {
+
+                    $("#AddOrUpdateForm")[0].reset();
+                    form.render();
+
+                    url = "/s_parentMessage/add";
+                    mainIndex = index ;
+
+                }
+            });
+        }
+
+
+        /**
+         * 编辑功能
+         */
+        function updateFunction(obj) {
+            layer.open({
+                title: '编辑家长信息',
+                type: 1,
+                shade: 0.2,
+                maxmin:true,
+                shadeClose: true,
+                area: ['50%', '100%'],
+                content: $("#AddOrUpdateForm"),
+                success:function (layero,index) {
+                    form.val("dataForm",obj.data);
+                    url = "/s_parentMessage/update";
+                    mainIndex = index;
+                }
+            });
+        }
+
+
+        form.on("submit(saveBtn)",function (data) {
+            var requestData = data.field;
+            requestData.role = sessionStorage.getItem("role");
+            requestData.token = sessionStorage.getItem("token");
+
+            $.ajax({
+                url:url,
+                data:requestData,
+                success:function (result) {
+
+                    if (0 === result.code){
+                        layer.msg(result.msg,{time:1000,end:function () {
+                                table.reload('currentTableId', {
+                                    url: '/s_parentMessage/all',
+                                    where: requestData
+                                });
+                            }});
+                    }else {
+                        layer.alert(result.msg);
+                    }
+
+                    layer.close(mainIndex);
+
+                }
+            });
+
+            return false ;
         });
 
     });
 </script>
+
+<form action="" class="layui-form layuimini-form" lay-filter="dataForm" id="AddOrUpdateForm" style="display: none;margin-right: 40px;margin-top: 30px;">
+    <input type="number" name="id" style="display: none;">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入姓名" value="" class="layui-input">
+
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="account" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入账号" value="" class="layui-input">
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">手机号</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入手机号" value="" class="layui-input">
+
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</form>
 
 </body>
 </html>
