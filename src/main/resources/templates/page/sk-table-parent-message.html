@@ -17,23 +17,19 @@
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">家长姓名</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="name" id="name" autocomplete="off" class="layui-input">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">家长姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" autocomplete="off" class="layui-input">
+                            </div>
                         </div>
-<!--                        <label class="layui-form-label">所属学校</label>-->
-<!--                        <div class="layui-input-inline">-->
-<!--                            <input type="text" name="school" autocomplete="on" class="layui-input">-->
-<!--                        </div>-->
-<!--                        <label class="layui-form-label">所属年级</label>-->
-<!--                        <div class="layui-form layui-input-inline" lay-filter="myDiv">-->
-<!--                            <select name="grade" id="parent-grade" lay-filter="mySelect">-->
-<!--                                <option value="1">一年级</option>-->
-<!--                                <option value="2">二年级</option>-->
-<!--                                <option value="3">三年级</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-                        <div class="layui-input-inline">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">手机号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="phone" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                         </div>
                     </div>
@@ -95,21 +91,21 @@
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            console.log(data.val())
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
+            // var result = JSON.stringify(data.field);
+            // layer.alert(result, {
+            //     title: '最终的搜索信息'
+            // });
+
+            var requestData = data.field;
+            requestData.role = sessionStorage.getItem("role");
+            requestData.token = sessionStorage.getItem("token");
 
             //执行搜索重载
+            console.log(requestData);
             table.reload('currentTableId', {
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    searchParams: result
-                }
-            }, 'data');
+                url: '/s_parentMessage/select',
+                where: requestData
+            });
 
             return false;
         });

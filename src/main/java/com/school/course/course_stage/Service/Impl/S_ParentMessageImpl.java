@@ -42,4 +42,9 @@ public class S_ParentMessageImpl implements S_ParentMessageService {
     public int insert(UserParents userParents) {
         return userParentsMapper.insert(userParents);
     }
+
+    @Override
+    public List<UserParents> select(UserParentsExample userParentsExample) {
+        return userParentsMapper.selectByExample(userParentsExample);
+    }
 }

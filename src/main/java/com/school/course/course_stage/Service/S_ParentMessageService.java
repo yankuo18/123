@@ -1,6 +1,7 @@
 package com.school.course.course_stage.Service;
 
 import com.school.course.course_stage.MybaitsGenerator.Entity.UserParents;
+import com.school.course.course_stage.MybaitsGenerator.Entity.UserParentsExample;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface S_ParentMessageService {
 
     int insert(UserParents userParents);
 
-
+    List<UserParents> select(UserParentsExample userParentsExample);
 }
