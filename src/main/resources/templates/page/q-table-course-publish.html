@@ -86,7 +86,13 @@
         //     filterMode : true
         // };
         // var editor = K.create('textarea[name="content"]', options);
-        window.editor = K.create('#editor_id');
+        window.editor = K.create('#editor_id',{
+            allowFileManager:false,
+            uploadJson:'/q_fileSave/image',
+            afterUpload:function () {
+                this.sync();
+            }
+        });
     });
     layui.use(['form'], function () {
         var $ = layui.jquery,
@@ -176,30 +182,31 @@
         if (its.length > 1 ){
             courseId = its[1].split('=')[1];
             url = urlBase +'/update';
+            requestData.id = courseId ;
+
+            $.ajax({
+                url:'/q_course/get',
+                data:requestData,
+                success:function (result) {
+                    if ( 0 === result.code){
+                        var data = result.data ;
+
+                        $.when(ajaxClass,ajaxCourse).done(function () {
+                            form.val('dataForm',data);
+                        });
+
+                        form.render();
+
+                        window.editor.html(data.detail);
+
+                    }else {
+                        layer.alert(result.msg);
+                    }
+                }
+            });
         }
 
-        requestData.id = courseId ;
 
-        $.ajax({
-            url:'/q_course/get',
-            data:requestData,
-            success:function (result) {
-                if ( 0 === result.code){
-                    var data = result.data ;
-
-                    $.when(ajaxClass,ajaxCourse).done(function () {
-                        form.val('dataForm',data);
-                    });
-
-                    form.render();
-
-                    window.editor.html(data.detail);
-
-                }else {
-                    layer.alert(result.msg);
-                }
-            }
-        });
 
 
 

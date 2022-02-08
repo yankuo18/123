@@ -65,18 +65,18 @@
     </div>
 </div>
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script charset="utf-8" src="../editor/kindeditor-all.js"></script>
-<script charset="utf-8" src="../editor/lang/zh-CN.js"></script>
+<!--<script charset="utf-8" src="../editor/kindeditor-all.js"></script>-->
+<!--<script charset="utf-8" src="../editor/lang/zh-CN.js"></script>-->
 <script charset="utf-8" src="../js/lay-config.js"></script>
 <script th:inline="none">
-    KindEditor.ready(function(K) {
-        // var options = {
-        //     cssPath : '/css/index.css',
-        //     filterMode : true
-        // };
-        // var editor = K.create('textarea[name="content"]', options);
-        window.editor = K.create('#editor_id');
-    });
+    // KindEditor.ready(function(K) {
+    //     // var options = {
+    //     //     cssPath : '/css/index.css',
+    //     //     filterMode : true
+    //     // };
+    //     // var editor = K.create('textarea[name="content"]', options);
+    //     window.editor = K.create('#editor_id');
+    // });
     layui.use(['form', 'table','miniTab'], function () {
         var $ = layui.jquery,
             form = layui.form,
