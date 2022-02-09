@@ -17,5 +17,7 @@ public interface Q_CourseClassTypeService {
 
     List<TypeCourseClass> select(TypeCourseClass typeCourseClass);
 
+    TypeCourseClass getById(int id) ;
+
 
 }

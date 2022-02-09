@@ -39,4 +39,9 @@ public class Q_CourseTypeServiceImpl implements Q_CourseTypeService {
     public List<TypeCourse> select(TypeCourseExample typeCourseExample) {
         return typeCourseMapper.selectByExample(typeCourseExample);
     }
+
+    @Override
+    public TypeCourse getById(int id) {
+        return typeCourseMapper.selectByPrimaryKey(id);
+    }
 }
