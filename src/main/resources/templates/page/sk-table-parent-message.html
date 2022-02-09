@@ -180,6 +180,35 @@
             });
         }
 
+        /**
+         * 删除功能
+         */
+        function deleteOneFunction(obj) {
+            layer.confirm('删除?', function (index) {
+                layer.close(index);
+
+                var requestData = {};
+                requestData.role = sessionStorage.getItem("role");
+                requestData.token = sessionStorage.getItem("token");
+                requestData.id = obj.data.id;
+
+                $.ajax({
+                    url: '/s_parentMessage/delete',
+                    data: requestData,
+                    success: function (result) {
+                        if (0 === result.code) {
+                            obj.del();
+                            layer.msg(result.msg, {time: 1000});
+
+                        } else {
+                            layer.alert(result.msg);
+                        }
+
+                    }
+                });
+
+            });
+        }
 
         /**
          * 编辑功能

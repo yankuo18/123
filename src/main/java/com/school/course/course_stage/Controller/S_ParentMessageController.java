@@ -53,6 +53,21 @@ public class S_ParentMessageController {
             return new ReturnResult().toMap(ConstAttr.ERROR,"添加失败");
     }
 
+    @RequestMapping("/delete")
+    public Map<String,Object> deleteParent(@RequestParam("token")String token ,
+                                           @RequestParam("role")String role,
+                                           @RequestParam("id")int id){
+
+        if (!q_authorityService.authority(role,token,"/s_parentMessage/delete"))
+            return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
+
+        if (s_parentMessageService.deleteById(id) > 0 )
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"删除成功");
+        else
+            return new ReturnResult().toMap(ConstAttr.ERROR,"删除失败");
+    }
+
+
     @RequestMapping("/update")
     public Map<String, Object> updateParent(UserParents userParents) {
         if (!q_authorityService.authority(userParents.getRole(), userParents.getToken(), "/s_parentMessage/update"))
