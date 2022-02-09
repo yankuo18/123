@@ -7,6 +7,7 @@ import com.school.course.course_stage.Service.Q_AuthorityService;
 import com.school.course.course_stage.Service.S_ParentMessageService;
 import com.school.course.course_stage.Util.ConstAttr;
 import com.school.course.course_stage.Util.ReturnResult;
+import com.school.course.course_stage.VO.UserParentsVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +40,8 @@ public class S_ParentMessageController {
         if (!q_authorityService.authority(role, token, "/s_parentMessage/all"))
             return new ReturnResult().toMap(ConstAttr.ERROR, "无权限");
 
-        return new ReturnResult().toMap(ConstAttr.SUCCESS, "", s_parentMessageService.getAll());
+        List<UserParentsVo> userParentsVo = s_parentMessageService.myGetAll();
+        return new ReturnResult().toMap(ConstAttr.SUCCESS, "", userParentsVo, userParentsVo.size());
     }
 
     @RequestMapping("/add")
@@ -80,28 +82,38 @@ public class S_ParentMessageController {
             return new ReturnResult().toMap(ConstAttr.ERROR,"修改失败");
     }
 
-    @RequestMapping("/select")
-    public Map<String,Object> selectParentUser(UserParents userParents){
+//    @RequestMapping("/select")
+//    public Map<String,Object> selectParentUser(UserParents userParents){
+//
+//        if (!q_authorityService.authority(userParents.getRole(), userParents.getToken(), "/s_parentMessage/all"))
+//            return new ReturnResult().toMap(ConstAttr.ERROR, "无权限");
+//
+//        UserParentsExample userParentsExample = new UserParentsExample();
+//
+//        if (userParents.getName() != null){
+//            userParentsExample.or().andNameEqualTo(userParents.getName());
+//        }
+//        if(userParents.getPhone() != null){
+//            userParentsExample.or().andPhoneEqualTo(userParents.getPhone());
+//        }
+//
+//        if(userParents.getName() == "" && userParents.getPhone() == ""){
+//            List<UserParents> userParentSelected = s_parentMessageService.getAll();
+//            return new ReturnResult().toMap(ConstAttr.SUCCESS,"", userParentSelected, userParentSelected.size());
+//        }
+//
+//        List<UserParents> userParentSelected = s_parentMessageService.select(userParentsExample);
+//
+//        return new ReturnResult().toMap(ConstAttr.SUCCESS,"", userParentSelected, userParentSelected.size());
+//    }
 
-        if (!q_authorityService.authority(userParents.getRole(), userParents.getToken(), "/s_parentMessage/all"))
+    @RequestMapping("/select")
+    public Map<String,Object> selectParentUser(UserParentsVo userParentsVo){
+        if (!q_authorityService.authority(userParentsVo.getRole(), userParentsVo.getToken(), "/s_parentMessage/all"))
             return new ReturnResult().toMap(ConstAttr.ERROR, "无权限");
 
-        UserParentsExample userParentsExample = new UserParentsExample();
+        List<UserParentsVo> userParentsVos = s_parentMessageService.mySelect(userParentsVo);
 
-        if (userParents.getName() != null){
-            userParentsExample.or().andNameEqualTo(userParents.getName());
-        }
-        if(userParents.getPhone() != null){
-            userParentsExample.or().andPhoneEqualTo(userParents.getPhone());
-        }
-
-        if(userParents.getName() == "" && userParents.getPhone() == ""){
-            List<UserParents> userParentSelected = s_parentMessageService.getAll();
-            return new ReturnResult().toMap(ConstAttr.SUCCESS,"", userParentSelected, userParentSelected.size());
-        }
-
-        List<UserParents> userParentSelected = s_parentMessageService.select(userParentsExample);
-
-        return new ReturnResult().toMap(ConstAttr.SUCCESS,"", userParentSelected, userParentSelected.size());
+        return new ReturnResult().toMap(ConstAttr.SUCCESS,"", userParentsVos, userParentsVos.size());
     }
 }

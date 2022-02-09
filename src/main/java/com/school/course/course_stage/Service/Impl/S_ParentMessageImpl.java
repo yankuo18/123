@@ -2,8 +2,10 @@ package com.school.course.course_stage.Service.Impl;
 
 import com.school.course.course_stage.MybaitsGenerator.Entity.UserParents;
 import com.school.course.course_stage.MybaitsGenerator.Entity.UserParentsExample;
+import com.school.course.course_stage.MybaitsGenerator.Mapper.MyUserParentsMapper;
 import com.school.course.course_stage.MybaitsGenerator.Mapper.UserParentsMapper;
 import com.school.course.course_stage.Service.S_ParentMessageService;
+import com.school.course.course_stage.VO.UserParentsVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +24,9 @@ import java.util.List;
 public class S_ParentMessageImpl implements S_ParentMessageService {
     @Resource
     UserParentsMapper userParentsMapper;
+
+    @Resource
+    MyUserParentsMapper myUserParentsMapper;
 
 
     @Override
@@ -48,5 +53,15 @@ public class S_ParentMessageImpl implements S_ParentMessageService {
     @Override
     public List<UserParents> select(UserParentsExample userParentsExample) {
         return userParentsMapper.selectByExample(userParentsExample);
+    }
+
+    @Override
+    public List<UserParentsVo> myGetAll() {
+        return myUserParentsMapper.myGetAll();
+    }
+
+    @Override
+    public List<UserParentsVo> mySelect(UserParentsVo userParentsVo) {
+        return myUserParentsMapper.mySelect(userParentsVo);
     }
 }

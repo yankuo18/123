@@ -96,4 +96,5 @@ public interface UserParentsMapper {
      * @mbg.generated Wed Feb 09 17:17:05 CST 2022
      */
     int updateByPrimaryKey(UserParents record);
+
 }
