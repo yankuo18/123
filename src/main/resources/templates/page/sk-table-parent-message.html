@@ -30,6 +30,18 @@
                             </div>
                         </div>
                         <div class="layui-inline">
+                            <label class="layui-form-label">学校</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="school" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">年级</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="grade" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                         </div>
                     </div>
@@ -80,7 +92,9 @@
                 {field: 'name', width: 80, title: '姓名'},
                 {field: 'account', width: 120, title: '账号'},
                 {field: 'phone', width: 120, title: '手机号'},
-                {field: 'remark', width: 80, title: '备注'},
+                {field: 'school', width: 120, title: '学校'},
+                {field: 'grade', width: 80, title: '年级'},
+                {field: 'remark', width: 120, title: '备注'},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
