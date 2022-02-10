@@ -66,8 +66,6 @@ public class Q_UserTeacherManageController {
     @RequestMapping("/add")
     public Map<String,Object> add(UserTeacherManage dataDTO){
 
-        System.out.println(dataDTO.toString());
-
         if (!q_authorityService.authority(dataDTO.getRole(),dataDTO.getToken(),"/q_userManage/add"))
             return new ReturnResult().toMap(ConstAttr.ERROR,"无权限");
 

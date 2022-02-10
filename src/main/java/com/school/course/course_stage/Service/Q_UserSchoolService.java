@@ -22,4 +22,6 @@ public interface Q_UserSchoolService {
 
     List<UserSchool> select(UserSchoolExample userSchoolExample);
 
+    UserSchool getById(int id) ;
+
 }

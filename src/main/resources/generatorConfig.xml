@@ -36,7 +36,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.school.course.course_stage.MybaitsGenerator.Mapper"
                              targetProject="src\main\java"/>
         <!--生成全部表tableName设为 %   -->
-        <table tableName="teacher_sign_in" domainObjectName="TeacherSignRecord">
+        <table tableName="course_school">
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         </table>
     </context>
