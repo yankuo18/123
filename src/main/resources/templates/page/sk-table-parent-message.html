@@ -51,7 +51,7 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+<!--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>-->
                 <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
             </div>
         </script>
@@ -208,6 +208,40 @@
                 });
 
             });
+        }
+
+        /**
+         * 批量删除
+         */
+
+        function deleteSomeFunction() {
+            var checkStatus = table.checkStatus('currentTableId')
+                , data = checkStatus.data;
+            var requestData = {};
+            requestData.role = sessionStorage.getItem("role");
+            requestData.token = sessionStorage.getItem("token");
+            requestData.ids = [];
+
+            for (var i = 0 ; i < data.length ; i ++ ){
+                requestData.ids.push(data[i].id);
+            }
+            console.log(requestData);
+            $.ajax({
+                url:'/s_parentMessage/deleteSome',
+                data:requestData,
+                success:function (result) {
+                    if (0 === result.code){
+                        layer.msg(result.msg,{time:1000});
+                    }else {
+                        layer.alert(result.msg);
+                    }
+                    table.reload('currentTableId', {
+                        url: '/s_parentMessage/all',
+                        where: requestData
+                    });
+                }
+            });
+
         }
 
         /**

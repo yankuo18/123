@@ -1,5 +1,6 @@
 package com.school.course.course_stage.Controller;
 
+import com.school.course.course_stage.DTO.S_UserParentDeleteSomeDTO;
 import com.school.course.course_stage.MybaitsGenerator.Entity.UserParents;
 import com.school.course.course_stage.MybaitsGenerator.Entity.UserParentsExample;
 import com.school.course.course_stage.MybaitsGenerator.Entity.UserSchool;
@@ -80,6 +81,26 @@ public class S_ParentMessageController {
             return new ReturnResult().toMap(ConstAttr.SUCCESS,"修改成功");
         else
             return new ReturnResult().toMap(ConstAttr.ERROR,"修改失败");
+    }
+
+    @RequestMapping("/deleteSome")
+    public Map<String,Object> deleteSomeParentUser(S_UserParentDeleteSomeDTO userParentDeleteSomeDTO){
+        if (!q_authorityService.authority(userParentDeleteSomeDTO.getRole(), userParentDeleteSomeDTO.getToken(), "/s_parentMessage/delete"))
+            return new ReturnResult().toMap(ConstAttr.ERROR, "无权限");
+
+        int length = userParentDeleteSomeDTO.getIds().size();
+        int status = 0 ;
+
+        for (Integer id : userParentDeleteSomeDTO.getIds()) {
+            status += s_parentMessageService.deleteById(id);
+        }
+
+        if (status == length )
+            return new ReturnResult().toMap(ConstAttr.SUCCESS,"删除成功");
+        else if (status > 0)
+            return new ReturnResult().toMap(ConstAttr.ERROR,"部分删除成功");
+        else
+            return new ReturnResult().toMap(ConstAttr.ERROR,"删除失败");
     }
 
 //    @RequestMapping("/select")
