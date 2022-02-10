@@ -154,7 +154,13 @@
 
                 if (result.code == 0 ){
 
-                    layer.msg('登录成功', function () {
+                    if (data.role === "school"){
+                        sessionStorage.setItem("schoolId",result.id);
+                    }else {
+                        sessionStorage.setItem("schoolId",-1);
+                    }
+
+                    layer.msg('登录成功',{time:1000},function () {
                         sessionStorage.setItem("token",result.data.token);
                         sessionStorage.setItem("role",data.role);
                         window.location = 'index.html';
