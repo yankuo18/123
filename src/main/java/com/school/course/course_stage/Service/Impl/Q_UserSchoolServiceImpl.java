@@ -74,4 +74,9 @@ public class Q_UserSchoolServiceImpl implements Q_UserSchoolService {
     public List<UserSchool> select(UserSchoolExample userSchoolExample) {
         return userSchoolMapper.selectByExample(userSchoolExample);
     }
+
+    @Override
+    public UserSchool getById(int id) {
+        return userSchoolMapper.selectByPrimaryKey(id);
+    }
 }
