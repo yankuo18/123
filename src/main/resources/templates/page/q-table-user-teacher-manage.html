@@ -56,7 +56,7 @@
             form = layui.form,
             table = layui.table;
 
-        var urlBase = '/q_userTeache';
+        var urlBase = '/q_userManage';
 
         var requestData = {};
         requestData.role = sessionStorage.getItem("role");
@@ -151,7 +151,7 @@
          */
         function addFunction() {
             layer.open({
-                title: '添加任课老师信息',
+                title: '添加班主任老师信息',
                 type: 1,
                 shade: 0.2,
                 maxmin:true,
@@ -204,7 +204,7 @@
 
         function updateFunction(obj) {
             layer.open({
-                title: '编辑任课老师信息',
+                title: '编辑班主任老师信息',
                 type: 1,
                 shade: 0.2,
                 maxmin:true,
@@ -213,6 +213,7 @@
                 content: $("#AddOrUpdateForm"),
                 success:function (layero,index) {
                     form.val("dataForm",obj.data);
+
                     url = urlBase+'/update';
                     mainIndex = index;
                 }
