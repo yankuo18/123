@@ -38,13 +38,18 @@ public class LoginController {
 
         String token = null ;
 
+        Map<String,Object> map = new HashMap<>(16);
+
         switch (role){
             case ConstAttr.ADMIN:
                 token = q_userAdminService.login(account,password);
                 break;
             case ConstAttr.SCHOOL:
                 token = q_userSchoolService.login(account,password);
-                break;
+                int id = q_userSchoolService.getByAccount(account).getId();
+                map = new ReturnResult().toMap(ConstAttr.SUCCESS,"login success","token",token) ;
+                map.put("id",id );
+                return map ;
             case ConstAttr.TEACHER_MANAGE:
 
 
